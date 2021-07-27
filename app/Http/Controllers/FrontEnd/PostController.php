@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Post;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +45,7 @@ class PostController extends Controller
     {
         $this->validate($request,[
             'name' => 'required|array',
-            'name*' => 'mimes:mp4,jpeg,bmp,png,jpg',
+            'name.*' => 'mimes:mp4,jpeg,bmp,png,jpg',
         ]);
 //        return $request->file('name')->extension();
         $post = Post::create([
@@ -72,7 +74,9 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::with(['likes','comments','client','photos' ,'share','master'])->find($id);
-        return view('frontend.post.show' ,compact('post'));
+        if($post <> null)
+            return view('frontend.post.show' ,compact('post'));
+        return redirect()->back();
     }
 
     /**
@@ -108,9 +112,11 @@ class PostController extends Controller
     {
         $post = Post::with(['likes','comments','client','photos' ,'share.photos','master'])->find($id);
 
-        foreach ($post->photos as $photo){
-            Storage::disk('public')->delete($photo->name);
-            $photo->delete();
+        if (count($post->photos) > 0){
+            foreach ($post->photos as $photo){
+                Storage::disk('public')->delete($photo->name);
+                $photo->delete();
+            }
         }
 
 //        foreach ($post->likes as $like)
@@ -142,6 +148,33 @@ class PostController extends Controller
         }
         return redirect()->back()->with('state' , 'please type comment');
 
+    }
+
+    public function commentEdit(Request $request)
+    {
+        $comment = DB::table('comments')->find($request->post);
+        return response()->json($comment);
+    }
+
+
+    public function commentUpdate(Request $request)
+    {
+        $request->validate([
+            'comment' => 'required'
+        ]);
+        $comment = DB::table('comments')->where('id',$request->id)->update(['comment' =>$request->comment]);
+        if ($comment)
+            return response()->json(DB::table('comments')->find($request->id));
+        return response()->json(['message' => 'please edit your comment']);
+    }
+
+
+    public function commentDelete(Request $request)
+    {
+        $comment = DB::table('comments')->where('id',$request->post)->delete();
+        if ($comment)
+            return response()->json(['message' => 'deleted']);
+        return response()->json('some thing wont wrong');
     }
 
     //------------------share post----------------//

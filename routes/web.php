@@ -48,5 +48,8 @@ Route::group(['namespace'=>'FrontEnd','middleware'=>'auth:client'],function (){
     Route::resource('post','PostController');
     Route::get('like','PostController@like')->name('post.like');
     Route::get('comment','PostController@comment')->name('post.comment');
+    Route::get('comment/edit','PostController@commentEdit')->name('comment.edit');
+    Route::post('comment/edit','PostController@commentUpdate')->name('comment.update');
+    Route::get('comment/delete','PostController@commentDelete')->name('comment.delete');
     Route::get('share/{id}','PostController@share')->name('post.share');
 });

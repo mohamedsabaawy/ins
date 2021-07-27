@@ -58,8 +58,9 @@
                             </a>
 
 
-                            <span>{{$post->post_id != null ? 'Share ' .$post->share->client->name . ' post' : ''}}</span>
-
+                            {{-------------------      show name of share post owner      -------------------}}
+                            <span class="badge badge-warning">{{$post->post_id != null ? 'Share ' . (isset($post->share->client) ? $post->share->client->name.'\'s' : 'this'). ' post' : ''}}</span>
+                            {{-------------------      end show name of share post owner      -------------------}}
 
                             <h6 class="badge badge-secondary ">{{$post->created_at->diffForHumans()}}</h6>
 
@@ -108,30 +109,38 @@
                             </div>
                         @else
                             <div class="card-body">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <a href="{{route('client.profile' ,$post->share->client->id )}}"
-                                           class="btn"><img
-                                                width="30px" height="30px"
-                                                src="{{$post->share->client->avatar ? asset('public/'.$post->share->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->share->client->name}}
-                                        </a>
-                                        <h6 class="badge badge-secondary float-right">{{$post->created_at->diffForHumans()}}</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        @foreach($post->share->photos as $photo)
-                                            <a href="{{route('post.show',$post->id)}}">
-                                                @if($photo->type == null)
-                                                    <img src="{{asset('public/'.$photo->name)}}" width="100%"
-                                                         height="100%">
-                                                @else
-                                                    <video src="{{asset('public/'.$photo->name)}}" width="100%"
-                                                           controls></video>
-
-                                                @endif
+                                @if(isset($post->share->client))
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="{{route('client.profile' ,$post->share->client->id )}}"
+                                               class="btn"><img
+                                                    width="30px" height="30px"
+                                                    src="{{$post->share->client->avatar ? asset('public/'.$post->share->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->share->client->name}}
                                             </a>
-                                        @endforeach
+                                            <h6 class="badge badge-secondary float-right">{{$post->created_at->diffForHumans()}}</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            @foreach($post->share->photos as $photo)
+                                                <a href="{{route('post.show',$post->id)}}">
+                                                    @if($photo->type == null)
+                                                        <img src="{{asset('public/'.$photo->name)}}" width="100%"
+                                                             height="100%">
+                                                    @else
+                                                        <video src="{{asset('public/'.$photo->name)}}" width="100%"
+                                                               controls></video>
+
+                                                    @endif
+                                                </a>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
+
+                                @else
+
+                                    <div>
+                                        <h1 class="text-center"> <i class="fa fa-sad-tear"></i> post is delete by the owner</h1>
+                                    </div>
+                                @endif
                             </div>
                         @endif
                         {{-------------------------- show number of likes and comments and shares --------------------}}
@@ -154,7 +163,7 @@
                                 <a class="btn btn-primary btn-sm" id="{{$post->id}}"
                                    href="{{route('post.show',$post->id)}}">comment</a>
                                 <a class="btn btn-primary btn-sm" id="{{$post->id}}"
-                                   href="{{route('post.share',$post->id)}}">share</a>
+                                   href="{{route('post.share',$post->post_id ? ($post->share ? $post->share->id : $post->id) : $post->id)}}">share</a>
                             </div>
                         </div>
 

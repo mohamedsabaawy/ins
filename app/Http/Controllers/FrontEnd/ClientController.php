@@ -42,7 +42,7 @@ class ClientController extends Controller
             'email' => 'required|unique:clients',
             'password' => 'required|confirmed',
         ]);
-        $client =Client::create([
+        $client = Client::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -80,7 +80,7 @@ class ClientController extends Controller
         $out = '';
         if (count($clients) > 0) {
             foreach ($clients as $client) {
-                $out .= '<tr><th><a class="btn" href="'.route('client.profile',$client->id).'"><img width="30px" height="30px" src="' .( $client->avatar ? asset('storage/' . $client->avatar) : asset(AVATAR)) . '"></a></th><th><a class="btn" href="'.route('client.profile',$client->id).'"> ' . $client->name . '</a></th</th></tr>';
+                $out .= '<tr><th><a class="btn" href="' . route('client.profile', $client->id) . '"><img width="30px" height="30px" src="' . ($client->avatar ? asset('storage/' . $client->avatar) : asset(AVATAR)) . '"></a></th><th><a class="btn" href="' . route('client.profile', $client->id) . '"> ' . $client->name . '</a></th</th></tr>';
             }
         }
         return response()->json([
@@ -91,18 +91,23 @@ class ClientController extends Controller
 //---------------------------------------------------------------//
 
     public function follow(Request $request)
-    {;
+    {
+        ;
         $follow = $request->user('client')->follows()->toggle($request->follow);
-        return $follow ;
+        return $follow;
     }
 
 //---------------------------------------------------------------//
 
     public function profile($id)
     {
-        $client =Client::with(['follows','followers'])->find($id);
+        $client = Client::with(['follows', 'followers'])->find($id);
+        if (!$client)
+        {
+            return redirect()->back();
+        }
         $posts = Post::where('client_id',$client->id)->latest()->paginate(PAGINATE);
-        return view('frontend.client.profile',compact('client' , 'posts'));
+        return view('frontend.client.profile', compact('client', 'posts'));
     }
 
 }

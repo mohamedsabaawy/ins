@@ -22,7 +22,7 @@ class Post extends Model
     public function comments()
     {
         return $this->belongsToMany(Client::class ,'comments')->withPivot([
-            'comment','created_at'
+            'comment','created_at','id'
         ])->withTimestamps();
     }
 

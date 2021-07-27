@@ -23,8 +23,9 @@
                                     src="{{$post->client->avatar ? asset('public/'.$post->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->client->name}}
                             </a>
 
-
-                            <span>{{$post->post_id != null ? 'Share ' .$post->share->client->name . ' post' : ''}}</span>
+                            {{-------------------      show name of share post owner      -------------------}}
+                            <span class="badge badge-warning">{{$post->post_id != null ? 'Share ' . (isset($post->share->client) ? $post->share->client->name.'\'s' : 'this'). ' post' : ''}}</span>
+                            {{-------------------      end show name of share post owner      -------------------}}
 
                             <span class="badge badge-secondary ">{{$post->created_at->diffForHumans()}}</span>
                             {{--                                    //////////////////////-----------------}}
@@ -161,7 +162,7 @@
                             <a class="btn btn-primary btn-sm" id="{{$post->id}}"
                                href="{{route('post.show',$post->id)}}">comment</a>
                             <a class="btn btn-primary btn-sm" id="{{$post->id}}"
-                               href="{{route('post.share',$post->id)}}">share </a>
+                               href="{{route('post.share',$post->post_id ? ($post->share ? $post->share->id : $post->id) : $post->id)}}">share </a>
                         </div>
                     </div>
 
