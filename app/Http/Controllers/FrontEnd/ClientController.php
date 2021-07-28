@@ -49,7 +49,8 @@ class ClientController extends Controller
         ]);
 
         $client->follows()->attach($client);
-        return redirect(route('client.login.form'))->with('state', 'register success');
+        Auth::attempt(['email' => $client->email , 'password' => $client->password]);
+        return redirect(route('welcome'))->with('state', 'register success');
     }
 
     public function logout()
