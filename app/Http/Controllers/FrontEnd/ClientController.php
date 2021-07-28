@@ -49,7 +49,7 @@ class ClientController extends Controller
         ]);
 
         $client->follows()->attach($client);
-        Auth::attempt(['email' => $client->email , 'password' => $client->password]);
+        Auth::guard('client')->loginUsingId($client->id);
         return redirect(route('welcome'))->with('state', 'register success');
     }
 
