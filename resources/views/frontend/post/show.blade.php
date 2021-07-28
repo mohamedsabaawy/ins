@@ -6,9 +6,9 @@
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-header">
-                        <a href="{{route('client.profile' , $post->client->id)}}" class="btn"><img
+                        <a href="{{route('client.profile' , $post->client->id)}}" class="btn"><img class="rounded-circle"
                                 src="{{$post->client->avatar ?asset('public/'.$post->client->avatar) : asset(AVATAR)}}"
-                                width="30px" height="30px" alt="">{{' '.$post->client->name}}</a>
+                                width="50px" height="50px" alt="">{{' '.$post->client->name}}</a>
 
 
                         {{-------------------      show name of share post owner      -------------------}}
@@ -60,7 +60,7 @@
                                         <a href="{{route('client.profile' , $post->share->client->id)}}"
                                            class="btn"><img
                                                 src="{{$post->client->avatar ?asset('public/'.$post->share->client->avatar) : asset(AVATAR)}}"
-                                                width="30px" height="30px">{{' '.$post->share->client->name}}</a>
+                                                width="50px" height="50px" class="rounded-circle">{{' '.$post->share->client->name}}</a>
                                         <h6 class="badge badge-secondary ">{{$post->share->created_at->diffForHumans()}}</h6>
 
                                     </div>
@@ -136,7 +136,7 @@
                                 <a class="btn" href="{{route('client.profile' , $comment->id)}}">
                                     <img
                                         src="{{$comment->avatar ? asset('public/' . $comment->avatar) : asset(AVATAR)}}"
-                                        width="30px" height="30px">{{' '.$comment->name}}
+                                        width="50px" height="50px" class="rounded-circle">{{' '.$comment->name}}
                                 </a>
                                 <span
                                     class="badge badge-secondary">{{$comment->pivot->created_at->diffForHumans()}}</span>

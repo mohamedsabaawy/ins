@@ -19,7 +19,7 @@
                     <div class="card mb-2">
                         <div class="card-header">
                             <a href="{{route('client.profile' ,$post->client->id )}}" class="btn"><img
-                                    width="30px" height="30px"
+                                    width="50px" height="50px" class="rounded-circle"
                                     src="{{$post->client->avatar ? asset('public/'.$post->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->client->name}}
                             </a>
 
@@ -87,8 +87,8 @@
 
                                         <div class="card-header">
                                             <a href="{{route('client.profile' ,$post->share->client->id )}}"
-                                               class="btn"><img
-                                                    width="30px" height="30px"
+                                               class="btn"><img class="rounded-circle"
+                                                    width="50px" height="50px"
                                                     src="{{$post->share->client->avatar ? asset('public/'.$post->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->client->name}}
                                             </a>
 
