@@ -125,7 +125,11 @@
         @yield('content')
     </div>
 </div>
+{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>--}}
+
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('plugins/jquery/jquery.form.js')}}"></script>
 @stack('scripts')
 <script>
     $('#search').keyup(function () {
@@ -159,6 +163,27 @@
             }
         })
     }
+
+
+
+    //----------like post ----------------//
+    function like(post) {
+
+
+        var post_id = post.id
+        $.ajax({
+            url: '{{route('post.like')}}',
+            type: 'get',
+            data: {post: post_id},
+            success: function (data) {
+
+                if (post.innerHTML.trim() == "Like") post.innerHTML = "Un like";
+                else post.innerHTML = "Like"
+            }
+        })
+    }
+
+    //--------------------end of like post---------------------//
 </script>
 </body>
 </html>

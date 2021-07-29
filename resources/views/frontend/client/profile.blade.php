@@ -175,39 +175,6 @@
 @endsection
 @push('scripts')
     <script>
-        //----------like post ----------------//
-        function like(post) {
-            var post_id = post.id
-            $.ajax({
-                url: '{{route('post.like')}}',
-                type: 'get',
-                data: {
-                    post: post_id
-                },
-                success: function (data) {
-                    console.log(data);
-                    if (post.innerHTML.trim() == 'Like') post.innerHTML = 'Un like'
-                    else post.innerHTML = 'Like'
-                }
-            })
-        }
-
-        //--------------------end of like post---------------------//
-
-        function follow(follow) {
-            alert(follow.id)
-            var follow_id = follow.id
-            $.ajax({
-                url: '{{route('client.follow')}}',
-                type: 'get',
-                data: {follow: follow_id},
-                success: function (data) {
-                    console.log(data);
-                    if (follow.innerHTML.trim() == 'Follow') follow.innerHTML = 'Un follow'
-                    else follow.innerHTML = 'Follow'
-                }
-            })
-        }
 
     </script>
 @endpush

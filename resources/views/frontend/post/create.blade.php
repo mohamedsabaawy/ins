@@ -47,7 +47,28 @@
 
     @push('scripts')
     <script>
+        $(function() {
+            $(document).ready(function()
+            {
+                var bar = $('.progress-bar');
 
+                $('form').ajaxForm({
+                    beforeSend: function() {
+                        var percentVal = '0%';
+                        bar.width(percentVal)
+                        bar.html(percentVal);
+                    },
+                    uploadProgress: function(event, position, total, percentComplete) {
+                        var percentVal = percentComplete + '%';
+                        bar.width(percentVal)
+                        bar.html(percentVal);
+                    },
+                    complete: function(xhr) {
+                        alert('File Has Been Uploaded Successfully');
+                    }
+                });
+            });
+        });
     </script>
     @endpush
 @endsection

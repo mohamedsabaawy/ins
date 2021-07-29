@@ -89,7 +89,7 @@
                                             <a href="{{route('client.profile' ,$post->share->client->id )}}"
                                                class="btn"><img class="rounded-circle"
                                                     width="50px" height="50px"
-                                                    src="{{$post->share->client->avatar ? asset('public/'.$post->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->client->name}}
+                                                    src="{{$post->share->client->avatar ? asset('public/'.$post->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->share->client->name}}
                                             </a>
 
                                             <h6 class="badge badge-secondary ">{{$post->share->created_at->diffForHumans()}}</h6>

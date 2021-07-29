@@ -199,25 +199,6 @@
 
     <script>
 
-
-        //----------like post ----------------//
-        function like(post) {
-
-
-            var post_id = post.id
-            $.ajax({
-                url: '{{route('post.like')}}',
-                type: 'get',
-                data: {post: post_id},
-                success: function (data) {
-
-                    if (post.innerHTML.trim() == "Like") post.innerHTML = "Un like";
-                    else post.innerHTML = "Like"
-                }
-            })
-        }
-
-        //--------------------end of like post---------------------//
         //----------edit comment post ----------------//
         function commentEdit(comment_id) {
             var comment = comment_id;
