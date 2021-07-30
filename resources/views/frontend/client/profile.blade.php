@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="card-header">
                         <a href="{{route('client.profile' ,$client->id)}}" class="btn"><img width="60px" height="60px"
-                                                                                            src="{{$client->avatar ? asset('public/'.$client->avatar) : asset(AVATAR)}}"><span
+                                                                                            src="{{$client->avatar ? asset('public/'.$client->avatar) : asset(AVATAR)}}" class="rounded-circle"><span
                                 style="font-size: 25px">{{'  '.$client->name}}</span></a>
                         @if(auth()->id() != $client->id)
                             <a class="btn btn-secondary float-right" onclick="follow(this)" id="{{$client->id}}">
@@ -53,13 +53,14 @@
                     <div class="card mb-2">
                         <div class="card-header">
                             <a href="{{route('client.profile' ,$post->client->id )}}" class="btn"><img
-                                    width="30px" height="30px"
+                                    width="60px" height="60px"  class="rounded-circle"
                                     src="{{$post->client->avatar ? asset('public/'.$post->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->client->name}}
                             </a>
 
 
                             {{-------------------      show name of share post owner      -------------------}}
-                            <span class="badge badge-warning">{{$post->post_id != null ? 'Share ' . (isset($post->share->client) ? $post->share->client->name.'\'s' : 'this'). ' post' : ''}}</span>
+                            <span
+                                class="badge badge-warning">{{$post->post_id != null ? 'Share ' . (isset($post->share->client) ? $post->share->client->name.'\'s' : 'this'). ' post' : ''}}</span>
                             {{-------------------      end show name of share post owner      -------------------}}
 
                             <h6 class="badge badge-secondary ">{{$post->created_at->diffForHumans()}}</h6>
@@ -97,7 +98,7 @@
                                         <a href="{{route('post.show',$post->id)}}">
                                             @if($photo->type == null)
                                                 <img src="{{asset('public/'.$photo->name)}}" width="100%"
-                                                     height="100%"><br/><br/>
+                                                     height="100%" ><br/><br/>
                                             @else
                                                 <video src="{{asset('public/'.$photo->name)}}" width="100%"
                                                        controls></video>
@@ -114,7 +115,7 @@
                                         <div class="card-header">
                                             <a href="{{route('client.profile' ,$post->share->client->id )}}"
                                                class="btn"><img
-                                                    width="30px" height="30px"
+                                                    width="60px" height="60px"  class="rounded-circle"
                                                     src="{{$post->share->client->avatar ? asset('public/'.$post->share->client->avatar) : asset(AVATAR)}}"><span>  </span>{{$post->share->client->name}}
                                             </a>
                                             <h6 class="badge badge-secondary float-right">{{$post->created_at->diffForHumans()}}</h6>
@@ -138,7 +139,8 @@
                                 @else
 
                                     <div>
-                                        <h1 class="text-center"> <i class="fa fa-sad-tear"></i> post is delete by the owner</h1>
+                                        <h1 class="text-center"><i class="fa fa-sad-tear"></i> post is delete by the
+                                            owner</h1>
                                     </div>
                                 @endif
                             </div>
